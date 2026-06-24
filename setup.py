@@ -5,5 +5,5 @@ setup(
     version="0.0.0",
     author="fahim",
     author_email="fahim.bioinfo@gmail.com",
-    packages=find_packages()
+    packages=find_packages(),
 )

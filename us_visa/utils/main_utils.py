@@ -46,6 +46,7 @@ def load_object(file_path: str) -> object:
     except Exception as e:
         raise USvisaException(e, sys) from e
 
+
 def save_numpy_array_data(file_path: str, array: np.array):
     """
     Save numpy array data to file
@@ -55,7 +56,7 @@ def save_numpy_array_data(file_path: str, array: np.array):
     try:
         dir_path = os.path.dirname(file_path)
         os.makedirs(dir_path, exist_ok=True)
-        with open(file_path, 'wb') as file_obj:
+        with open(file_path, "wb") as file_obj:
             np.save(file_obj, array)
     except Exception as e:
         raise USvisaException(e, sys) from e
@@ -68,7 +69,7 @@ def load_numpy_array_data(file_path: str) -> np.array:
     return: np.array data loaded
     """
     try:
-        with open(file_path, 'rb') as file_obj:
+        with open(file_path, "rb") as file_obj:
             return np.load(file_obj)
     except Exception as e:
         raise USvisaException(e, sys) from e
@@ -88,8 +89,7 @@ def save_object(file_path: str, obj: object) -> None:
         raise USvisaException(e, sys) from e
 
 
-def drop_columns(df: DataFrame, cols: list)-> DataFrame:
-
+def drop_columns(df: DataFrame, cols: list) -> DataFrame:
     """
     drop the columns form a pandas DataFrame
     df: pandas DataFrame
@@ -101,8 +101,7 @@ def drop_columns(df: DataFrame, cols: list)-> DataFrame:
         df = df.drop(columns=cols, axis=1)
 
         logging.info("Exited the drop_columns method of utils")
-        
+
         return df
     except Exception as e:
         raise USvisaException(e, sys) from e
-    

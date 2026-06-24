@@ -3,9 +3,7 @@ from us_visa.exception import USvisaExecption
 import sys
 
 try:
-    r = 4/0
+    r = 4 / 0
     print(r)
 except Exception as e:
-    raise USvisaExecption(e,sys)
-
-
+    raise USvisaExecption(e, sys)
