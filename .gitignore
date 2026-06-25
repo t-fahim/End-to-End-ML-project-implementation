@@ -222,3 +222,8 @@ __marimo__/
 # other
 mongoDB_test.ipynb
 artifact/
+
+# Ignore all generated reports in artifact folder
+notebooks/**/*.html
+notebooks/**/*.json
+notebooks/**/*.yaml
