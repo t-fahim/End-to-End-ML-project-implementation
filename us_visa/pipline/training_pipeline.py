@@ -3,8 +3,7 @@ from us_visa.exception import USvisaException
 from us_visa.logger import logging
 from us_visa.components.data_ingestion import DataIngestion
 from us_visa.components.data_validation import DataValidation
-
-# from us_visa.components.data_transformation import DataTransformation
+from us_visa.components.data_transformation import DataTransformation
 # from us_visa.components.model_trainer import ModelTrainer
 # from us_visa.components.model_evaluation import ModelEvaluation
 # from us_visa.components.model_pusher import ModelPusher
@@ -13,7 +12,7 @@ from us_visa.components.data_validation import DataValidation
 from us_visa.entity.config_entity import (
     DataIngestionConfig,
     DataValidationConfig,
-    # DataTransformationConfig,
+    DataTransformationConfig,
     # ModelTrainerConfig,
     # ModelEvaluationConfig,
     # ModelPusherConfig,
@@ -23,7 +22,7 @@ from us_visa.entity.config_entity import (
 from us_visa.entity.artifact_entity import (
     DataIngestionArtifact,
     DataValidationArtifact,
-    # DataTransformationArtifact,
+    DataTransformationArtifact,
     # ModelTrainerArtifact,
     # ModelEvaluationArtifact,
     # ModelPusherArtifact,
@@ -34,7 +33,7 @@ class TrainingPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
         self.data_validation_config = DataValidationConfig()
-        # self.data_transformation_config = DataTransformationConfig()
+        self.data_transformation_config = DataTransformationConfig()
         # self.model_trainer_config = ModelTrainerConfig()
         # self.model_evaluation_config = ModelEvaluationConfig()
         # self.model_pusher_config = ModelPusherConfig()
@@ -87,26 +86,26 @@ class TrainingPipeline:
         except Exception as e:
             raise USvisaException(e, sys) from e
 
-    # def start_data_transformation(
-    #     self,
-    #     data_ingestion_artifact: DataIngestionArtifact,
-    #     data_validation_artifact: DataValidationArtifact,
-    # ) -> DataTransformationArtifact:
-    #     """
-    #     This method of TrainPipeline class is responsible for starting data transformation component
-    #     """
-    #     try:
-    #         data_transformation = DataTransformation(
-    #             data_ingestion_artifact=data_ingestion_artifact,
-    #             data_transformation_config=self.data_transformation_config,
-    #             data_validation_artifact=data_validation_artifact,
-    #         )
-    #         data_transformation_artifact = (
-    #             data_transformation.initiate_data_transformation()
-    #         )
-    #         return data_transformation_artifact
-    #     except Exception as e:
-    #         raise USvisaException(e, sys)
+    def start_data_transformation(
+        self,
+        data_ingestion_artifact: DataIngestionArtifact,
+        data_validation_artifact: DataValidationArtifact,
+    ) -> DataTransformationArtifact:
+        """
+        This method of TrainPipeline class is responsible for starting data transformation component
+        """
+        try:
+            data_transformation = DataTransformation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_transformation_config=self.data_transformation_config,
+                data_validation_artifact=data_validation_artifact,
+            )
+            data_transformation_artifact = (
+                data_transformation.initiate_data_transformation()
+            )
+            return data_transformation_artifact
+        except Exception as e:
+            raise USvisaException(e, sys)
 
     # def start_model_trainer(
     #     self, data_transformation_artifact: DataTransformationArtifact
@@ -174,10 +173,11 @@ class TrainingPipeline:
                 data_ingestion_artifact=data_ingestion_artifact
             )
             print("Data validation completed.")
-            # data_transformation_artifact = self.start_data_transformation(
-            #     data_ingestion_artifact=data_ingestion_artifact,
-            #     data_validation_artifact=data_validation_artifact,
-            # )
+            data_transformation_artifact = self.start_data_transformation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_validation_artifact=data_validation_artifact,
+            )
+            print("Data transformation completed.")
             # model_trainer_artifact = self.start_model_trainer(
             #     data_transformation_artifact=data_transformation_artifact
             # )
